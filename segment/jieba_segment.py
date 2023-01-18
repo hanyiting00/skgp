@@ -9,7 +9,7 @@ paddle.enable_static()
 # 结巴分词
 class JiebaSegment:
 
-    def __init__(self, custom_path="dict/custom.txt"):
+    def __init__(self, custom_path="../dict/custom.txt"):
         jieba.load_userdict(custom_path)  # 装入词典
 
     # cut_all, False：默认精确模式；True：全模式

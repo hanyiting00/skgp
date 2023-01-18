@@ -4,7 +4,7 @@ from LAC import LAC
 # 百度分词
 class BaiduSegment:
 
-    def __init__(self, model_path=None, mode="lac", custom_path="dict/custom.txt"):
+    def __init__(self, model_path=None, mode="lac", custom_path="../dict/custom.txt"):
         self.lac = LAC(mode=mode, model_path=model_path)
         self.lac.load_customization(custom_path)
 
