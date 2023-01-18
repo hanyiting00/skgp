@@ -1,5 +1,9 @@
 import jieba
 import jieba.analyse
+from jieba import enable_paddle, posseg
+import paddle
+
+paddle.enable_static()
 
 
 # 结巴分词
@@ -32,6 +36,10 @@ class JiebaSegment:
             keyword_dict[x] = w
         return keyword_dict
 
+    # paddle模式,词性标注
+    def pseg(self, text, use_paddle=True):
+        return posseg.lcut(text, use_paddle)
+
 
 if __name__ == '__main__':
     j = JiebaSegment()
@@ -63,9 +71,8 @@ if __name__ == '__main__':
     # keywords_top1 = j.extracttags(str_text, 10)
     # print("/".join(keywords_top1))
 
-    print(j.textrank(str_text, topK=10, withWeight=True))
+    # print(j.textrank(str_text, topK=10, withWeight=True))
 
+    print(j.pseg(str_text))
 
-
-
-
+    print(j.pseg(str_text, use_paddle=True))
