@@ -44,16 +44,16 @@ class JiebaSegment:
 if __name__ == '__main__':
     j = JiebaSegment()
 
-    # text = '如果放到post中将出错。'
-    # test_sent = (
-    #     "李小福是创新办主任也是云计算方面的专家; 什么是八一双鹿\n"
-    #     "例如我输入一个带“韩玉赏鉴”的标题，在自定义词库中也增加了此词为N类\n"
-    #     "「台中」正確應該不會被切開。mac上可分出「石墨烯」；此時又可以分出來凱特琳了。"
-    # )
-    # result = j.seg(test_sent)
-    # print(result)
-    # result = j.seg(text, cut_all=False)
-    # print(result)
+    text = '如果放到post中将出错。'
+    test_sent = (
+        "李小福是创新办主任也是云计算方面的专家; 什么是八一双鹿\n"
+        "例如我输入一个带“韩玉赏鉴”的标题，在自定义词库中也增加了此词为N类\n"
+        "「台中」正確應該不會被切開。mac上可分出「石墨烯」；此時又可以分出來凱特琳了。"
+    )
+    result = j.seg(test_sent)
+    print(result)
+    result = j.seg(text, cut_all=False)
+    print(result)
     #
     # j.delword("中将")
     # j.addword("将出错")
