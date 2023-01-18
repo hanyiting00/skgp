@@ -4,12 +4,15 @@ from LAC import LAC
 # 百度分词
 class BaiduSegment:
 
+    def __init__(self, model_path=None, mode="lac", custom_path="dict/custom.txt"):
+        self.lac = LAC(mode=mode, model_path=model_path)
+        self.lac.load_customization(custom_path)
+
     # mode:分词模式 seg、lac、rank
-    def seg(self, sentence, model_path=None, custom_path="dict/custom.txt", mode="lac"):
+    def seg(self, sentence, mode="lac"):
         # 装载分词模型
-        lac = LAC(mode=mode, model_path=model_path)
-        lac.load_customization(custom_path)
-        return lac.run(sentence)
+        self.lac = LAC(mode=mode)
+        return self.lac.run(sentence)
 
 
 if __name__ == '__main__':
