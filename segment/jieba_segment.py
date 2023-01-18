@@ -20,6 +20,7 @@ class JiebaSegment:
     def suggestfreq(self, word, tune=False):
         jieba.suggest_freq(word, tune)
 
+
 if __name__ == '__main__':
     j = JiebaSegment()
 
@@ -43,4 +44,3 @@ if __name__ == '__main__':
     j.suggestfreq("post中", True)
     result = j.seg(text, cut_all=False)
     print(result)
-
