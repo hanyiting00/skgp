@@ -1,9 +1,7 @@
 from numpy import unique
-from numpy import where
 from sklearn.cluster import KMeans
 from sklearn.cluster import DBSCAN
 from sklearn.datasets import make_classification
-from matplotlib import pyplot
 
 from skgp.cluster.base import tfidf_features, count_features
 
