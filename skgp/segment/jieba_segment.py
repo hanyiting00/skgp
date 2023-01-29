@@ -1,6 +1,8 @@
+import os
 import jieba
 import jieba.analyse
 from jieba import enable_paddle, posseg
+from jieba.posseg import dt
 import paddle
 
 paddle.enable_static()
@@ -9,8 +11,11 @@ paddle.enable_static()
 # 结巴分词
 class JiebaSegment:
 
-    def __init__(self, custom_path="../dict/custom.txt"):
-        jieba.load_userdict(custom_path)  # 装入词典
+    def add_curr_dir(self, name):
+        return os.path.join(os.path.dirname(__file__), name)
+
+    def load_userdict(self, custom_path):
+        jieba.load_userdict(self.add_curr_dir(custom_path))  # 装入词典
 
     # cut_all, False：默认精确模式；True：全模式
     def seg(self, sentence, cut_all=False):
@@ -39,6 +44,13 @@ class JiebaSegment:
     # paddle模式,词性标注
     def pseg(self, text, use_paddle=True):
         return posseg.lcut(text, use_paddle)
+
+    # 返回词性标注
+    def pos(self, words):
+        pos = []
+        for word in words:
+            pos.append(dt.word_tag_tab.get(word))
+        return pos
 
 
 if __name__ == '__main__':
@@ -73,6 +85,7 @@ if __name__ == '__main__':
 
     # print(j.textrank(str_text, topK=10, withWeight=True))
 
-    print(j.pseg(str_text))
+    # print(j.pseg(str_text))
 
     print(j.pseg(str_text, use_paddle=True))
+
