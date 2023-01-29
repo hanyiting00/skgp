@@ -11,3 +11,7 @@ print(words)
 pos = skgp.pos(words)  # 词性标注
 print(pos)
 
+
+ner = skgp.ner(words)  # 命名实体识别
+print(ner)
+

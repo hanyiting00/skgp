@@ -10,3 +10,6 @@ seg = any.seg
 # 词性标注
 pos = any.pos
 
+# 命名实体识别
+ner = any.ner
+

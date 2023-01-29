@@ -87,5 +87,6 @@ if __name__ == '__main__':
 
     # print(j.pseg(str_text))
 
+    str_text = '苏州的天气不错'
     print(j.pseg(str_text, use_paddle=True))
 
