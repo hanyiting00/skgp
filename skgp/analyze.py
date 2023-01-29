@@ -1,5 +1,6 @@
 import os
 
+from skgp import perceptron
 from skgp.segment.jieba_segment import JiebaSegment
 
 
@@ -10,8 +11,7 @@ def add_curr_dir(name):
 class Analyze(object):
     def __init__(self):
         self.segment = JiebaSegment()
-        self.ner_model =None
-
+        self.ner_model = None
 
     def init(self):
         self.init_ner()
@@ -28,5 +28,6 @@ class Analyze(object):
         return labels
 
     def ner(self, words):  # 传入的是词语
-        labels = []
+        self.init_ner()
+        labels = self.ner_model.predict(words)
         return labels
