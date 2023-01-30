@@ -1,6 +1,6 @@
 from skgp import utils
 from heapq import nlargest
-from itertools import count
+from itertools import count, product
 
 
 class Keywords(object):
@@ -68,4 +68,52 @@ class Keywords(object):
                     graph[index2][index1] += 1.0
         return graph
 
-    
+
+class Summarize(object):
+    def __init__(self,
+                 use_stopword=True,
+                 stop_words_file=None,
+                 dict_path=None,
+                 max_iter=100,
+                 tol=0.0001):
+        if dict_path:
+            raise RuntimeError("True")
+        self.__use_stopword = use_stopword
+        self.__dict_path = dict_path
+        self.__max_iter = max_iter
+        self.__tol = tol
+
+        self.__stop_words = set()
+        self.__stop_words_file = utils.default_stopword_file()
+        if stop_words_file:
+            self.__stop_words_file = stop_words_file
+        if use_stopword:
+            with open(self.__stop_words_file, 'r', encoding='utf-8') as f:
+                for word in f:
+                    self.__stop_words.add(word.strip())
+
+    def summarize(self, text, n):
+        text = text.replace('\n', '')
+        text = text.replace('\r', '')
+        text = utils.as_text(text)
+        tokens = utils.cut_sentences(text)
+        sentences, sents = utils.cut_filter_words(tokens, self.__stop_words, self.__use_stopword)
+
+        graph = self.create_graph(sents)
+        scores = utils.weight_map_rank(graph, self.__max_iter, self.__tol)
+        sent_selected = nlargest(n, zip(scores, count()))
+        sent_index = []
+        for i in range(min(n, len(sent_selected))):
+            sent_index.append(sent_selected[i][1])
+        summarizes = [sentences[i] for i in sent_index]
+        return summarizes
+
+    @staticmethod
+    def create_graph(word_sent):
+        num = len(word_sent)
+        board = [[0.0 for _ in range(num)] for _ in range(num)]
+
+        for i, j in product(range(num), repeat=2):
+            if i != j:
+                board[i][j] = utils.sentences_similarity(word_sent[i], word_sent[j])
+        return board

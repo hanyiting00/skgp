@@ -35,7 +35,7 @@ def cut_sentences(sentense):
         yield ''.join(tmp)
 
 
-def psegcut_filter_words(cutted_sentences, stopwords, user_stopwords=True):
+def psegcut_filter_words(cutted_sentences, stopwords, use_stopwords=True):
     sents = []
     sentences = []
     for sent in cutted_sentences:
@@ -43,7 +43,7 @@ def psegcut_filter_words(cutted_sentences, stopwords, user_stopwords=True):
 
         word_list = skgp.seg(sent)
         word_list = [word for word in word_list if len(word) > 0]
-        if user_stopwords:
+        if use_stopwords:
             word_list = [word.strip() for word in word_list if word.strip() not in stopwords]
         sents.append(word_list)
 
@@ -121,3 +121,32 @@ def weight_map_rank(weight_graph, max_iter, tol):
         if count > max_iter:
             break
     return scores
+
+
+def cut_filter_words(cutted_sentences, stopwords, use_stopwords=False):
+    sents = []
+    sentences = []
+    for sent in cutted_sentences:
+        sentences.append(sent)
+        if use_stopwords:
+            sents.append([word for word in skgp.seg(sent) if word and word not in stopwords])  # 把句子分成词语
+        else:
+            sents.append([word for word in skgp.seg(sent) if word])
+
+    return sentences, sents
+
+
+def sentences_similarity(s1, s2):
+    """计算两个句子的相似度
+
+    :param s1: list
+    :param s2: list
+    :return: float
+    """
+    counter = 0
+    for sent in s1:
+        if sent in s2:
+            counter += 1
+    if counter == 0:
+        return 0
+    return counter / (math.log(len(s1)) + math.log(len(s2)))

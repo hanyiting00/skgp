@@ -1,7 +1,6 @@
 from skgp import analyze
 from skgp.segment.jieba_segment import JiebaSegment
 
-
 any = analyze.Analyze()
 
 # 分词
@@ -16,3 +15,5 @@ ner = any.ner
 # 关键字抽取
 keywords = any.keywords
 
+# 中文摘要
+summarize = any.summarize

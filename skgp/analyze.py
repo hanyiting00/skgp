@@ -2,7 +2,7 @@ import os
 
 from skgp import perceptron
 from skgp.segment.jieba_segment import JiebaSegment
-from skgp.textrank import Keywords
+from skgp.textrank import Keywords, Summarize
 
 
 def add_curr_dir(name):
@@ -14,6 +14,7 @@ class Analyze(object):
         self.segment = JiebaSegment()
         self.ner_model = None
         self.keywords_model = None
+        self.summarize_model = None
 
     def init(self):
         self.init_ner()
@@ -38,3 +39,8 @@ class Analyze(object):
         if self.keywords_model is None:
             self.keywords_model = Keywords(tol=0.0001, window=2)
         return self.keywords_model.keywords(text, topkey)
+
+    def summarize(self, text, topsen=5):  # 文本摘要
+        if self.summarize_model is None:
+            self.summarize_model = Summarize(tol=0.0001)
+        return self.summarize_model.summarize(text, topsen)
