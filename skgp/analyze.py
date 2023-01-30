@@ -2,6 +2,7 @@ import os
 
 from skgp import perceptron
 from skgp.segment.jieba_segment import JiebaSegment
+from skgp.textrank import Keywords
 
 
 def add_curr_dir(name):
@@ -12,6 +13,7 @@ class Analyze(object):
     def __init__(self):
         self.segment = JiebaSegment()
         self.ner_model = None
+        self.keywords_model = None
 
     def init(self):
         self.init_ner()
@@ -31,3 +33,8 @@ class Analyze(object):
         self.init_ner()
         labels = self.ner_model.predict(words)
         return labels
+
+    def keywords(self, text, topkey=5):  # 关键字抽取
+        if self.keywords_model is None:
+            self.keywords_model = Keywords(tol=0.0001, window=2)
+        return self.keywords_model.keywords(text, topkey)

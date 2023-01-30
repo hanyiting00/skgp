@@ -13,3 +13,6 @@ pos = any.pos
 # 命名实体识别
 ner = any.ner
 
+# 关键字抽取
+keywords = any.keywords
+

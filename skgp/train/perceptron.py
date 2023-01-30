@@ -230,5 +230,5 @@ def predict(model="model/ap.model"):
 
 if __name__ == '__main__':
     # train()
-    eval()
+    # eval()
     predict(model="model/ap.model")
