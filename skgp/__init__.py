@@ -29,3 +29,6 @@ knowledge = any.knowledge
 
 # 情感分析
 sentiment = any.sentiment
+
+# 文本聚类
+text_cluster = any.text_cluster

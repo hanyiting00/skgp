@@ -1,8 +1,6 @@
 from collections import Counter
 import math
 
-import skgp
-
 
 def count_features(corpus, tokenizer=list):
     """词频特征
@@ -24,7 +22,7 @@ def count_features(corpus, tokenizer=list):
     return features, vocab
 
 
-def tfidf_features(corpus, tokenizer=skgp.cut):
+def tfidf_features(corpus, tokenizer=list):
     """ 文本的 tfidf 特征
     :param corpus: list of str
     :param tokenizer: function for tokenize
@@ -55,7 +53,6 @@ def tfidf_features(corpus, tokenizer=skgp.cut):
 
 
 if __name__ == '__main__':
-
     corpus = ["判断unicode是否是汉字。", "全角符号转半角符号。", "一些基于自然语言处理的预处理过程也会在本文中出现。"]
     X, names = count_features(corpus, tokenizer=list)
     print(X)
