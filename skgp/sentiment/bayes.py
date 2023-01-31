@@ -32,6 +32,13 @@ class AddOneProb(BaseProb):
         self.total = 0.0
         self.none = 1
 
+    def add(self, key, value):
+        self.total += value
+        if not self.exists(key):
+            self.d[key] = 1
+            self.total += 1
+        self.d[key] += value
+
 
 class Bayes(object):
     def __init__(self):
@@ -76,6 +83,29 @@ class Bayes(object):
             if now > prob:
                 ret, prob = k, now
         return (ret, prob)
+
+    def train(self, data):
+        for d in data:
+            c = d[0]
+            if c not in self.d:
+                self.d[c] = AddOneProb()
+            for word in d[1]:
+                self.d[c].add(word, 1)
+        self.total = sum(map(lambda x: self.d[x].getsum(), self.d.keys()))
+
+    def save(self, fname, iszip=True):
+        d = {}
+        d['total'] = self.total
+        d['d'] = {}
+        for k, v in self.d.items():
+            d['d'][k] = v.__dict__
+
+        if not iszip:
+            marshal.dump(d, open(fname, 'wb'))
+        else:
+            f = gzip.open(fname, 'wb')
+            f.write(marshal.dumps(d))
+            f.close()
 
 
 if __name__ == '__main__':
