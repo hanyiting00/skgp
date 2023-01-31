@@ -17,3 +17,6 @@ keywords = any.keywords
 
 # 中文摘要
 summarize = any.summarize
+
+# 新词发现
+findword = any.findword

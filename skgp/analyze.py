@@ -1,6 +1,6 @@
 import os
 
-from skgp import perceptron
+from skgp import perceptron, findword
 from skgp.segment.jieba_segment import JiebaSegment
 from skgp.textrank import Keywords, Summarize
 
@@ -44,3 +44,6 @@ class Analyze(object):
         if self.summarize_model is None:
             self.summarize_model = Summarize(tol=0.0001)
         return self.summarize_model.summarize(text, topsen)
+
+    def findword(self, input_file, output_file, min_freq=10, min_mtro=80, min_entro=3): # 发现新词
+        findword.new_word_find(input_file, output_file, min_freq, min_mtro, min_entro)

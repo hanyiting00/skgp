@@ -25,6 +25,8 @@ NASA文章介绍，在中国为全球绿化进程做出的贡献中，有42%来�
 # keywords = skgp.keywords(text, 5)  # 关键词抽取
 # print(keywords)
 
-summarize = skgp.summarize(text, 3)  # 文本摘要
-print(summarize)
+# summarize = skgp.summarize(text, 3)  # 文本摘要
+# print(summarize)
+
+skgp.findword('input.txt', 'output.txt') # 根据大规模语料，利用信息熵做新词发现。
 

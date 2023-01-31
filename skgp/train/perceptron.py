@@ -165,7 +165,7 @@ class Perceptron:
                 self.model.classes.add(tag)
 
 
-def train(filepath='data/train.txt', model='model/ap.model', nr_iter=1):
+def train(filepath='data/input.txt', model='model/ap.model', nr_iter=1):
     tagger = Perceptron()
     print('Reading corpus...')  # 读取语料
     training_data = []
