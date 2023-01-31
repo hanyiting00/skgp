@@ -12,6 +12,9 @@ pos = any.pos
 # 命名实体识别
 ner = any.ner
 
+
+load_userdict = any.load_userdict
+
 # 关键字抽取
 keywords = any.keywords
 
@@ -20,3 +23,6 @@ summarize = any.summarize
 
 # 新词发现
 findword = any.findword
+
+# 知识图谱
+knowledge = any.knowledge
