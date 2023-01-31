@@ -31,6 +31,12 @@ NASA文章介绍，在中国为全球绿化进程做出的贡献中，有42%来�
 # skgp.findword('input.txt', 'output.txt') # 根据大规模语料，利用信息熵做新词发现。
 
 # 知识图谱关系抽取
-text = '姚明1980年9月12日出生于上海市徐汇区，祖籍江苏省苏州市吴江区震泽镇，前中国职业篮球运动员，司职中锋，现任中职联公司董事长兼总经理。'
-knowledge =skgp.knowledge(text)
-print(knowledge)
+# text = '姚明1980年9月12日出生于上海市徐汇区，祖籍江苏省苏州市吴江区震泽镇，前中国职业篮球运动员，司职中锋，现任中职联公司董事长兼总经理。'
+# knowledge =skgp.knowledge(text)
+# print(knowledge)
+
+# # 情感分析
+text = '很讨厌还是个懒鬼'
+# text = '今天天气很好，我非常开心'
+sentiment = skgp.sentiment(text)
+print(sentiment)

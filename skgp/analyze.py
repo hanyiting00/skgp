@@ -2,6 +2,7 @@ import os
 
 from skgp import perceptron, findword
 from skgp.segment.jieba_segment import JiebaSegment
+from skgp.sentiment.bayes import Bayes
 from skgp.textrank import Keywords, Summarize
 
 
@@ -16,6 +17,8 @@ class Analyze(object):
         self.kg_model = None
         self.keywords_model = None
         self.summarize_model = None
+
+        self.sentiment_model = Bayes()
 
     def init(self):
         self.init_ner()
@@ -111,3 +114,8 @@ class Analyze(object):
                 spo_list.append([entity[0], predicate, obj[0]])
 
         return spo_list
+
+    def sentiment(self, text):  # 情感分析
+        words = self.seg(text)
+        ret, prob = self.sentiment_model.classify(words)
+        return ret, prob

@@ -26,3 +26,6 @@ findword = any.findword
 
 # 知识图谱
 knowledge = any.knowledge
+
+# 情感分析
+sentiment = any.sentiment
