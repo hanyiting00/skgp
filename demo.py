@@ -1,9 +1,9 @@
 import skgp
+import time
 
-
-# text = '苏州的天气不错'
-# words = skgp.seg(text)  # 分词
-# print(words)
+text = '苏州的天气不错'
+words = skgp.seg(text)  # 分词
+print(words)
 
 # text = '李小福是创新办主任也是云计算方面的专家; 什么是八一双鹿'
 # words = skgp.seg(text, cut_all=True)  # 分词
@@ -44,16 +44,27 @@ NASA文章介绍，在中国为全球绿化进程做出的贡献中，有42%来�
 
 
 # 文本聚类（需要调参）
-docs = [
-        "百度深度学习中文情感分析工具Senta试用及在线测试",
-        "情感分析是自然语言处理里面一个热门话题",
-        "AI Challenger 2018 文本挖掘类竞赛相关解决方案及代码汇总",
-        "深度学习实践：从零开始做电影评论文本情感分析",
-        "BERT相关论文、文章和代码资源汇总",
-        "将不同长度的句子用BERT预训练模型编码，映射到一个固定长度的向量上",
-        "自然语言处理工具包spaCy介绍",
-        "现在可以快速测试一下spaCy的相关功能，我们以英文数据为例，spaCy目前主要支持英文和德文"
-    ]
-cluster = skgp.text_cluster(docs)
-print(cluster)
+# docs = [
+#         "百度深度学习中文情感分析工具Senta试用及在线测试",
+#         "情感分析是自然语言处理里面一个热门话题",
+#         "AI Challenger 2018 文本挖掘类竞赛相关解决方案及代码汇总",
+#         "深度学习实践：从零开始做电影评论文本情感分析",
+#         "BERT相关论文、文章和代码资源汇总",
+#         "将不同长度的句子用BERT预训练模型编码，映射到一个固定长度的向量上",
+#         "自然语言处理工具包spaCy介绍",
+#         "现在可以快速测试一下spaCy的相关功能，我们以英文数据为例，spaCy目前主要支持英文和德文"
+#     ]
+#
+# # time.clock()默认单位为s
+# # 获取开始时间
+# start = time.clock()
+# cluster = skgp.text_cluster(docs)
+# # 获取结束时间
+# end = time.clock()
+# # 计算运行时间
+# runTime = end - start
+# runTime_ms = runTime * 1000
+# # 输出运行时间
+# print("运行时间：", runTime_ms, "毫秒")
+# print(cluster)
 
