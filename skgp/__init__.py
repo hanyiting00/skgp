@@ -6,6 +6,8 @@ any = analyze.Analyze()
 # 分词
 seg = any.seg
 
+cut = any.cws
+
 # 词性标注
 pos = any.pos
 

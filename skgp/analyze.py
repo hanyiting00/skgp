@@ -2,6 +2,7 @@ import os
 
 from skgp import perceptron, findword
 from skgp.segment.jieba_segment import JiebaSegment
+from skgp.segment.nroute import Segment
 from skgp.sentiment.bayes import Bayes
 from skgp.textrank import Keywords, Summarize
 from skgp.cluster.text_cluster import text_cluster as cluster
@@ -13,7 +14,8 @@ def add_curr_dir(name):
 
 class Analyze(object):
     def __init__(self):
-        self.segment = JiebaSegment()
+        # self.segment = JiebaSegment()
+        self.segment = Segment()
         self.ner_model = None
         self.kg_model = None
         self.keywords_model = None
@@ -24,7 +26,7 @@ class Analyze(object):
     def init(self):
         self.init_ner()
 
-    def load_userdict(self, userdict="../dict/custom.dict"):
+    def load_userdict(self, userdict="dict/custom.txt"):
         self.segment.load_userdict(userdict)
 
     def init_ner(self):
@@ -35,8 +37,15 @@ class Analyze(object):
         if self.kg_model is None:
             self.kg_model = perceptron.Perceptron(add_curr_dir("model/kg.model"))
 
-    def seg(self, sentence, cut_all=False):
-        return self.segment.seg(sentence, cut_all)
+    # for jieba
+    # def seg(self, sentence, cut_all=False):
+    #     return self.segment.seg(sentence, cut_all)
+
+    def seg(self, sentence):
+        return self.segment.seg(sentence, mode="default")
+
+    def cws(self, sentence, mode='probe'):
+        return self.segment.seg(sentence, mode)
 
     def pos(self, words):
         labels = self.segment.pos(words)

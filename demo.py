@@ -1,10 +1,25 @@
 import skgp
 import time
 
-text = '苏州的天气不错'
-words = skgp.seg(text)  # 分词
+# text = '苏州的天气不错'
+# words = skgp.seg(text)  # 分词
+# print(words)
+
+# words = skgp.cut(text)  # 分词
+# print(words)
+
+# 字典模式分词
+text = '思知机器人挺好用的'
+words = skgp.seg(text)
 print(words)
 
+# jiagu.load_userdict('dict/user.dict') # 加载自定义字典，支持字典路径、字典列表形式。
+skgp.load_userdict(['思知机器人'])
+
+words = skgp.seg(text)
+print(words)
+
+# for jieba分词
 # text = '李小福是创新办主任也是云计算方面的专家; 什么是八一双鹿'
 # words = skgp.seg(text, cut_all=True)  # 分词
 # print(words)
