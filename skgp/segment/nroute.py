@@ -51,6 +51,25 @@ class Segment:
         if len(word) > self.max_word_len:
             self.max_word_len = len(word)
 
+    def load_userdict(self, userdict):
+        if not self.initialized:
+            self.init()
+
+        if isinstance(userdict, str):
+            self.load_vocab(userdict)
+
+        for item in userdict:
+            if isinstance(item, list):
+                if len(item) == 1:
+                    word = item[0]
+                    self.add_vocab(word)
+                elif len(item) == 2:
+                    word = item[0]
+                    freq = item[1]
+                    self.add_vocab(word, freq)
+            elif isinstance(item, str):
+                self.add_vocab(word=item)
+
     def seg(self, sentence, mode="default"):
         if not self.initialized:
             self.init()
@@ -123,6 +142,7 @@ class Segment:
 
 if __name__ == '__main__':
     s = Segment()
+    s.load_userdict(['金凤区'])
     text = "银川市金凤区北京中路福宁城11-1-号"
     words = s.seg(text)
     print(words)
