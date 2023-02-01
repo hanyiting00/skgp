@@ -2,6 +2,16 @@ from collections import Counter
 import math
 
 
+def elu_distance(a, b):
+    """计算两点之间的欧氏距离并返回
+    :param a: list of float
+    :param b: list of float
+    :return: float
+    """
+    x = sum([pow((a_ - b_), 2) for a_, b_ in zip(a, b)])
+    return math.sqrt(x)
+
+
 def count_features(corpus, tokenizer=list):
     """词频特征
 

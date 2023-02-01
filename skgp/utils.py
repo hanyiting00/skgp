@@ -11,6 +11,9 @@ def default_stopword_file():
 
 sentense_delimiters = ['。', '？', '！', '…']
 
+allow_speech_tags = ['an', 'i', 'j', 'l', 'n', 'nr', 'nrfg', 'ns',
+                     'nt', 'nz', 't', 'v', 'vd', 'vn', 'eng']
+
 
 def as_text(v):
     """生成unicode字符串"""
@@ -24,6 +27,10 @@ def as_text(v):
         raise ValueError('Unknown type %r' % type(v))
 
 
+def is_text(v):
+    return isinstance(v, str)
+
+
 def cut_sentences(sentense):
     tmp = []
     for ch in sentense:  # 遍历字符串中的每一个字
@@ -33,6 +40,18 @@ def cut_sentences(sentense):
             tmp = []
     if len(tmp) > 0:  # 如以定界符。结尾的文本的文本信息会在循环中返回，无需再次传递
         yield ''.join(tmp)
+
+
+def cut_filter_words(cutted_sentences, stopwords, use_stopwords=False):
+    sentences = []
+    sents = []
+    for sent in cutted_sentences:
+        sentences.append(sent)
+        if use_stopwords:
+            sents.append([word for word in skgp.seg(sent) if word and word not in stopwords])  # 把句子分成词语
+        else:
+            sents.append([word for word in skgp.seg(sent) if word])
+    return sentences, sents
 
 
 def psegcut_filter_words(cutted_sentences, stopwords, use_stopwords=True):
@@ -150,3 +169,61 @@ def sentences_similarity(s1, s2):
     if counter == 0:
         return 0
     return counter / (math.log(len(s1)) + math.log(len(s2)))
+
+
+# --------------------------------------------------------------------
+
+def is_chinese(uchar):
+    """判断一个字符是否是汉字"""
+    assert len(uchar) == 1, "uchar 只能是单个字符"
+    if u'\u4e00' <= uchar <= u'\u9fa5':
+        return True
+    else:
+        return False
+
+
+def is_number(uchar):
+    """判断一个字符是否是数字"""
+    assert len(uchar) == 1, "uchar 只能是单个字符"
+    if u'\u0030' <= uchar <= u'\u0039':
+        return True
+    else:
+        return False
+
+
+def is_alphabet(uchar):
+    """判断一个字符是否是英文字母"""
+    assert len(uchar) == 1, "uchar 只能是单个字符"
+    if (u'\u0041' <= uchar <= u'\u005a') or (u'\u0061' <= uchar <= u'\u007a'):
+        return True
+    else:
+        return False
+
+
+def B2Q(uchar):
+    """单字符半角转全角"""
+    assert len(uchar) == 1, "uchar 只能是单个字符"
+    inside_code = ord(uchar)
+    if inside_code < 0x0020 or inside_code > 0x7e:
+        # 不是半角字符就返回原来的字符
+        return uchar
+    if inside_code == 0x0020:
+        # 除了空格其他的全角半角的公式为:半角=全角-0xfee0
+        inside_code = 0x3000
+    else:
+        inside_code += 0xfee0
+    return chr(inside_code)
+
+
+def Q2B(uchar):
+    """单字符全角转半角"""
+    assert len(uchar) == 1, "uchar 只能是单个字符"
+    inside_code = ord(uchar)
+    if inside_code == 0x3000:
+        inside_code = 0x0020
+    else:
+        inside_code -= 0xfee0
+    if inside_code < 0x0020 or inside_code > 0x7e:
+        # 转完之后不是半角字符返回原来的字符
+        return uchar
+    return chr(inside_code)

@@ -1,5 +1,6 @@
 import skgp
 
+
 # text = '苏州的天气不错'
 # words = skgp.seg(text)  # 分词
 # print(words)

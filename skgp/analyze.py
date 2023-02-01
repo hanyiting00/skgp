@@ -121,5 +121,5 @@ class Analyze(object):
         ret, prob = self.sentiment_model.classify(words)
         return ret, prob
 
-    def text_cluster(self,docs, features_method='tfidf', method="k-means", k=3, max_iter=100, eps=0.5, min_pts=2):
+    def text_cluster(self, docs, features_method='tfidf', method="k-means", k=3, max_iter=100, eps=0.5, min_pts=2):
         return cluster(docs, features_method, method, k, max_iter, eps, min_pts, self.seg)

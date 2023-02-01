@@ -1,9 +1,6 @@
-from numpy import unique
-from sklearn.cluster import KMeans
-from sklearn.cluster import DBSCAN
-from sklearn.datasets import make_classification
-
 from skgp.cluster.base import tfidf_features, count_features
+from skgp.cluster.dbscan import DBSCAN
+from skgp.cluster.kmeans import KMeans
 
 """
 features_method: 提取文本特征的方法，目前支持 tfidf 和 count 两种。
@@ -24,24 +21,28 @@ def text_cluster(docs, features_method='tfidf', method="dbscan", n_clusters=3, m
     else:
         raise ValueError('features_method error')
 
+    # feature to doc
+    f2d = {k: v for k, v in zip(docs, features)}
+
     if method == 'k-means':
-        model = KMeans(n_clusters=n_clusters, max_iter=max_iter)
-        model.fit(features)
-        yhat = model.predict(features)
-        clusters = unique(yhat)
-        return clusters
-
+        km = KMeans(k=n_clusters, max_iter=max_iter)
+        clusters = km.train(features)
     elif method == 'dbscan':
-        model = DBSCAN(eps=eps, min_samples=min_samples)
-        # 模型拟合与聚类预测
-        yhat = model.fit_predict(features)
-        # 检索唯一群集
-        clusters = unique(yhat)
-        return clusters
-
+        ds = DBSCAN(eps=eps, min_pts=min_samples)
+        clusters = ds.train(features)
     else:
         raise ValueError("method invalid, please use 'k-means' or 'dbscan'")
 
+    clusters_out = {}
+    for label, examples in clusters.items():
+        c_docs = []
+        for example in examples:
+            doc = [d for d, f in f2d.items() if list(example) == f]
+            c_docs.extend(doc)
+
+        clusters_out[label] = list(set(c_docs))
+
+    return clusters_out
 
 # docs, _ = make_classification(n_samples=1000, n_features=2, n_informative=2, n_redundant=0, n_clusters_per_class=1,
 #                               random_state=4)
